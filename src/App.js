@@ -1,11 +1,15 @@
 // routes
 import Router from './routes';
 import CacheBuster from 'react-cache-buster';
-
+import { version } from '../package.json';
 // theme
 import ThemeProvider from './theme';
+// components
+import RtlLayout from './components/RtlLayout';
 
-
+import NotistackProvider from './components/NotistackProvider';
+import ThemeColorPresets from './components/ThemeColorPresets';
+import MotionLazyContainer from './components/animate/MotionLazyContainer';
 // ----------------------------------------------------------------------
 
 export default function App() {
@@ -19,7 +23,11 @@ export default function App() {
     >
       <ThemeProvider>
         <ThemeColorPresets>    
-          <Router />             
+        <RtlLayout>
+            <NotistackProvider>
+                <Router />
+            </NotistackProvider>
+          </RtlLayout>            
         </ThemeColorPresets>
       </ThemeProvider>
     </CacheBuster>

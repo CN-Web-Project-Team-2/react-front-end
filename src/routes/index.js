@@ -39,7 +39,7 @@ export default function Router() {
         },
       ],
     },
-   
+ 
     {
       path: '/demo',
       element: <Demo />,
@@ -62,7 +62,13 @@ export default function Router() {
           ),
         },
         {
-     
+          path: PATH_ADMIN.importTest,
+          element: (
+            <RoleBasedGuard accessibleRoles={['admin', 'mod']}>
+              <ImportTest />
+            </RoleBasedGuard>
+          ),
+        },
         {
           path: '/profile',
           element: (
@@ -71,10 +77,31 @@ export default function Router() {
             </AuthGuard>
           ),
         },
-    
+        // question
+        { path: PATH_LEARNING.root, element: <Navigate to={PATH_LEARNING.question.root} replace />, index: true },
+        { path: PATH_LEARNING.question.root, element: <Questions /> },
+        {
+          path: PATH_LEARNING.question.edit,
+          element: (
+            <RoleBasedGuard accessibleRoles={['admin', 'mod']}>
+              <EditQuestion />
+            </RoleBasedGuard>
           ),
- 
-    
+        },
+        {
+          path: PATH_LEARNING.question.create,
+          element: (
+            <RoleBasedGuard accessibleRoles={['admin', 'mod']}>
+              <NewQuestion />
+            </RoleBasedGuard>
+          ),
+        },
+        { path: PATH_LEARNING.question.id, element: <Question /> },
+        
+    {
+      path: '/',
+      element: <Navigate to={PATH_LEARNING.root} replace />,
+    },
     {
       path: '*',
       element: <LogoOnlyLayout />,
@@ -89,6 +116,17 @@ export default function Router() {
 
 // Authentication
 const Login = Loadable(lazy(() => import('../pages/auth/Login')));
+// const Register = Loadable(lazy(() => import('../pages/auth/Register')));
+// Learning
+// - Question
+const Questions = Loadable(lazy(() => import('../pages/learning/question/Questions')));
+const Question = Loadable(lazy(() => import('../pages/learning/question/Question')));
+const NewQuestion = Loadable(lazy(() => import('../pages/learning/question/NewQuestion')));
+const EditQuestion = Loadable(lazy(() => import('../pages/learning/question/EditQuestion')));
 
-
+// Page
+const NotFound = Loadable(lazy(() => import('../pages/Page404')));
+const Demo = Loadable(lazy(() => import('../pages/Demo')));
+const Admin = Loadable(lazy(() => import('../pages/admin/Admin')));
+const ImportTest = Loadable(lazy(() => import('../pages/admin/ImportTest')));
 const Profile = Loadable(lazy(() => import('../pages/Profile')));

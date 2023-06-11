@@ -6,10 +6,14 @@ import { version } from '../package.json';
 import ThemeProvider from './theme';
 // components
 import RtlLayout from './components/RtlLayout';
-
+import { ChartStyle } from './components/chart';
+import ScrollToTop from './components/ScrollToTop';
+import { ProgressBarStyle } from './components/ProgressBar';
 import NotistackProvider from './components/NotistackProvider';
 import ThemeColorPresets from './components/ThemeColorPresets';
 import MotionLazyContainer from './components/animate/MotionLazyContainer';
+import LoadingScreen from './components/LoadingScreen';
+
 // ----------------------------------------------------------------------
 
 export default function App() {
@@ -22,12 +26,17 @@ export default function App() {
       loadingComponent={<LoadingScreen fullScreen />} //If not pass, nothing appears at the time of new version check.
     >
       <ThemeProvider>
-        <ThemeColorPresets>    
-        <RtlLayout>
+        <ThemeColorPresets>
+          <RtlLayout>
             <NotistackProvider>
+              <MotionLazyContainer>
+                <ProgressBarStyle />
+                <ChartStyle />
+                <ScrollToTop />
                 <Router />
+              </MotionLazyContainer>
             </NotistackProvider>
-          </RtlLayout>            
+          </RtlLayout>
         </ThemeColorPresets>
       </ThemeProvider>
     </CacheBuster>

@@ -1,4 +1,11 @@
-
+import * as Yup from 'yup';
+import { useState } from 'react';
+// form
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+// @mui
+import { Alert, Button, Stack } from '@mui/material';
+// routes
 // hooks
 import useAuth from '../../../hooks/useAuth';
 import useIsMountedRef from '../../../hooks/useIsMountedRef';
@@ -45,7 +52,16 @@ export default function LoginForm() {
     }
   };
 
-  
+  const onFbLogin = async () => {
+    try {
+      await fbLogin();
+    } catch (error) {
+      console.error(error);
+      if (isMountedRef.current) {
+        setError('afterSubmit', error);
+      }
+    }
+  };
 
   const onGgLogin = async () => {
     try {

@@ -39,7 +39,22 @@ export default function Router() {
         },
       ],
     },
- 
+    {
+      path: PATH_LEARNING.test.do(":id"),
+      element: (
+        <AuthGuard>
+          <TestDoing replace />
+        </AuthGuard>
+      ),
+    },
+    {
+      path: PATH_LEARNING.test.pdf,
+      element: (
+        <AuthGuard>
+          <TestViewPDF replace />
+        </AuthGuard>
+      ),
+    },
     {
       path: '/demo',
       element: <Demo />,
@@ -97,7 +112,43 @@ export default function Router() {
           ),
         },
         { path: PATH_LEARNING.question.id, element: <Question /> },
-        
+        // test
+        { path: PATH_LEARNING.test.root, element: <Tests /> },
+        {
+          path: PATH_LEARNING.test.create,
+          element: (
+            <RoleBasedGuard accessibleRoles={['admin', 'mod']}>
+              <NewTest />
+            </RoleBasedGuard>
+          ),
+        },
+        {
+          path: PATH_LEARNING.test.autoCreate,
+          element: (
+            <RoleBasedGuard accessibleRoles={['admin', 'mod']}>
+              <AutoCreateTest />
+            </RoleBasedGuard>
+          ),
+        },
+        { path: PATH_LEARNING.test.id, element: <Test /> },
+        {
+          path: PATH_LEARNING.test.detail,
+          element: (
+            <AuthGuard>
+              <TestDetail />
+            </AuthGuard>
+          ),
+        },
+        {
+          path: PATH_LEARNING.test.edit,
+          element: (
+            <RoleBasedGuard accessibleRoles={['admin', 'mod']}>
+              <EditTest />
+            </RoleBasedGuard>
+          ),
+        },
+      ],
+    },
     {
       path: '/',
       element: <Navigate to={PATH_LEARNING.root} replace />,
@@ -123,7 +174,15 @@ const Questions = Loadable(lazy(() => import('../pages/learning/question/Questio
 const Question = Loadable(lazy(() => import('../pages/learning/question/Question')));
 const NewQuestion = Loadable(lazy(() => import('../pages/learning/question/NewQuestion')));
 const EditQuestion = Loadable(lazy(() => import('../pages/learning/question/EditQuestion')));
-
+// - Test
+const Tests = Loadable(lazy(() => import('../pages/learning/test/Tests')));
+const Test = Loadable(lazy(() => import('../pages/learning/test/Test')));
+const NewTest = Loadable(lazy(() => import('../pages/learning/test/NewTest')));
+const EditTest = Loadable(lazy(() => import('../pages/learning/test/EditTest')));
+const AutoCreateTest = Loadable(lazy(() => import('../pages/learning/test/AutoCreateTest')));
+const TestDoing = Loadable(lazy(() => import('../pages/learning/test/TestDoing')));
+const TestDetail = Loadable(lazy(() => import('../pages/learning/test/TestDetail')));
+const TestViewPDF = Loadable(lazy(() => import('../pages/learning/test/TestViewPDF')));
 // Page
 const NotFound = Loadable(lazy(() => import('../pages/Page404')));
 const Demo = Loadable(lazy(() => import('../pages/Demo')));
